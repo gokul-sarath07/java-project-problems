@@ -1,6 +1,6 @@
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class SumOfNonduplicateInteger {
 
@@ -14,13 +14,18 @@ public class SumOfNonduplicateInteger {
 		}
 		System.out.println("Enter " + size + " numbers: ");
 
-		Set<Integer> array = new HashSet<>();
+		Map<Integer, Integer> hmap = new HashMap<>();
 		for (int i = 0; i < size; i++) {
-			array.add(scanner.nextInt());
+			int value = scanner.nextInt();
+			if (hmap.containsKey(value)) {
+				hmap.remove(value);
+			} else {
+				hmap.put(value, value);
+			}
 		}
 		System.out.println();
 
-		System.out.println("Sum of " + array.toString() + " is " + getSumOfArray(array));
+		System.out.println("Sum of " + hmap.values().toString() + " is " + getSumOfArray(hmap));
 		scanner.close();
 	}
 
@@ -28,7 +33,7 @@ public class SumOfNonduplicateInteger {
    // Read n numbers from the console and print the sum of numbers which are not repeated in the list.
    // Should read atleast 2 numbers.
 
-	public static int getSumOfArray(Set<Integer> array) {
-		return array.stream().mapToInt(Integer::intValue).sum();
+	public static int getSumOfArray(Map<Integer, Integer> hmap) {
+		return hmap.values().stream().mapToInt(Integer::intValue).sum();
 	}
 }
